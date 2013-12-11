@@ -22,7 +22,7 @@ function ProjectEuler() {
 
         return sum;
     }
-    
+
     //arg2: param
     self.problem2 = function problem2(arg1, arg2) {
         var sum = 0;
@@ -110,27 +110,27 @@ function ProjectEuler() {
             for (dig1; dig1 > 0; dig1--) {
                 //loop down from second digit in a nested loop
                 for (dig2; dig2 > 0; dig2--) {
-                //check if product of dig1*dig2 is a palindrome
+                    //check if product of dig1*dig2 is a palindrome
                     if (self.isPalindrome(dig1 * dig2)) {
                         //return palindrome and the the two numbers
                         return dig1 * dig2 + " = " + dig1 + " * " + dig2
                     }
                 }
-            } 
+            }
         }
         //something went wrong if it made it here
         return false
     };
 
-        //compares two digits and returns the highest
-        self.getLargest = function getLargest(arg1, arg2) {
-            if (arg1 > arg2) {
-                return arg1;
-            }
-            else {
-                return arg2;
-            }
-        
+    //compares two digits and returns the highest
+    self.getLargest = function getLargest(arg1, arg2) {
+        if (arg1 > arg2) {
+            return arg1;
+        }
+        else {
+            return arg2;
+        }
+
     };
 
     self.isPalindrome = function isPalindrome(arg1) {
@@ -152,15 +152,24 @@ function ProjectEuler() {
         }
 
     };
+    self.problem5 = function problem5(arg1) {
 
+    };
+    self.problem6 = function problem6() {
+        var sumofsquares = 0;
+        var squareofsums = 0;
+        var i = 0;
+        for (i; i <= 10; i++) {
+            sumofsquares += Math.pow(i, 2);
+            squareofsums += i;
+        }
+        squareofsums = squareofsums*squareofsums
 
-
-     
-
-
+        return squareofsums - sumofsquares;
+    }
+    
 
     //end of class
 }
-
 
 
