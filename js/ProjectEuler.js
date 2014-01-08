@@ -3,12 +3,16 @@
 
 function ProjectEuler() {
     var self = this;
-    //instantiate problem 1 as a method
-    //arg1 is the ceiling. In other words the number you want to look up to.
-    //arg2 is the first multiple you want to look for
-    //arg3 is the second multiple you want to look for
-    //this method will return the sum of all the multiples
-    self.problem1 = function problem1(arg1, arg2, arg3) {
+}
+
+//instantiate problem 1 as a method
+//arg1 is the ceiling. In other words the number you want to look up to.
+//arg2 is the first multiple you want to look for
+//arg3 is the second multiple you want to look for
+//this method will return the sum of all the multiples
+ProjectEuler.prototype = {
+
+    problem1: function (arg1, arg2, arg3) {
         var sum = 0;
         var i = 0;
         //loop through all integers up to arg1 which is the ceiling
@@ -21,10 +25,10 @@ function ProjectEuler() {
         }
 
         return sum;
-    }
+    },
 
     //arg2: param
-    self.problem2 = function problem2(arg1, arg2) {
+    problem2: function (arg1, arg2) {
         var sum = 0;
         if (arg2 === "even") {
             sum += 2;
@@ -62,39 +66,68 @@ function ProjectEuler() {
 
         this.fibonacci(1, 2)
         return sum;
-    };
+    },
 
 
-    self.isPrime = function isPrime(arg1) {
-        var i = 2;
-        var sqrtarg1 = Math.sqrt(arg1);
-        if (arg1 === 2) {
+    isPrime: function (arg1) {
+        //return true if arg1 is prime
+        var i = 5;
+        var w = 2;
+        //if arg1 is 2 or 3 then it is prime
+        if (arg1 === 2 || arg1 === 3) {
             return true;
         }
-        while (i <= sqrtarg1) {
-            if (arg1 % i === 0) {
-                return false;
-            }
-            i++;
+        //if arg1 is divisible by 2 or 3 the it is not prime
+        if (arg1 % 2 === 0 || arg1 % 3 === 0) {
+            return false
         }
+
+        //while i^2 is less then or equal to arg1
+        while (i * i <= arg1) {
+
+            //if arg1 is divisible by i then it is not prime
+            if (arg1 % i === 0) {
+                return false
+            }
+
+            i += w;
+            w = 6 - w;
+        }
+
+
         return true;
-    };
+
+    },
+
 
     //find the largest prime factor of a number
-    self.problem3 = function problem3(arg1) {
-        var i = arg1;
-        //loop from end so that you grab the largest number
-        for (i; i > 0; i--) {
+    problem3: function (arg1) {
+        var max;
+        if (Math.sqrt(arg1) <= 6) {
+            max = arg1;
+        }
+        else {
+            max = Math.sqrt(arg1);
+        };
+        var i = 1;
+        var oldresult = 0;
+        var result;
+        for (i; i < max; i++) {
             if (arg1 % i === 0) {
-                if (self.isPrime(i) == true) {
-                    return i;
+                if (this.isPrime(i) === true) {
+                    result = this.getLargestInt(i, oldresult);
                 }
+                oldresult = result;
             }
         }
-    };
+        if (result === 1) {
+            return "The integer you entered is prime and has no divisors";
+        }
+        return result
+    },
     //find the largest palindrome product of two n-digit numbers
     //arg1 can not be larger then 6.
-    self.problem4 = function problem4(arg1) {
+    problem4: function (arg1) {
         //if not an integer <= 6
         if (!(arg1 <= 6)) {
             return "Please enter an integer less then 7";
@@ -111,7 +144,7 @@ function ProjectEuler() {
                 //loop down from second digit in a nested loop
                 for (dig2; dig2 > 0; dig2--) {
                     //check if product of dig1*dig2 is a palindrome
-                    if (self.isPalindrome(dig1 * dig2)) {
+                    if (this.isPalindrome(dig1 * dig2)) {
                         //return palindrome and the the two numbers
                         return dig1 * dig2 + " = " + dig1 + " * " + dig2
                     }
@@ -120,20 +153,19 @@ function ProjectEuler() {
         }
         //something went wrong if it made it here
         return false
-    };
+    },
 
     //compares two digits and returns the highest
-    self.getLargest = function getLargest(arg1, arg2) {
+    getLargestInt: function (arg1, arg2) {
+        var largestint = arg2;
         if (arg1 > arg2) {
-            return arg1;
-        }
-        else {
-            return arg2;
+            largestint = arg1;
         }
 
-    };
+        return largestint;
+    },
 
-    self.isPalindrome = function isPalindrome(arg1) {
+    isPalindrome: function (arg1) {
         var reverse = 0;
         var num = arg1;
         var removelastdig = num;
@@ -151,11 +183,11 @@ function ProjectEuler() {
             return false;
         }
 
-    };
-    self.problem5 = function problem5(arg1) {
+    },
+    problem5: function (arg1) {
 
-    };
-    self.problem6 = function problem6() {
+    },
+    problem6: function () {
         var sumofsquares = 0;
         var squareofsums = 0;
         var i = 0;
@@ -163,13 +195,9 @@ function ProjectEuler() {
             sumofsquares += Math.pow(i, 2);
             squareofsums += i;
         }
-        squareofsums = squareofsums*squareofsums
+        squareofsums = squareofsums * squareofsums
 
         return squareofsums - sumofsquares;
     }
-    
 
-    //end of class
-}
-
-
+};
